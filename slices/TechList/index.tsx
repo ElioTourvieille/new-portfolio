@@ -25,7 +25,6 @@ const TechList = ({ slice }: TechListProps): JSX.Element => {
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
-      // create as many GSAP animations and/or ScrollTriggers here as you want...
       const tl = gsap.timeline({
         scrollTrigger: {
           pin: true, // pin the trigger element while active
