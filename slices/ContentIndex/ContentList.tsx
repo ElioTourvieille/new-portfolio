@@ -31,6 +31,7 @@ const ContentList = ({
     const revealRef = useRef(null);
     const [currentItem, setCurrentItem] = useState<null | number>(null);
     const [hovering, setHovering] = useState(false);
+    const lastMousePos = useRef({ x: 0, y: 0 });
 
     useEffect(() => {
         // Animate list-items in with a stagger
@@ -62,6 +63,45 @@ const ContentList = ({
         }, component);
     }, []);
 
+    useEffect(() => {
+        // Mouse move event listener
+        const handleMouseMove = (e: MouseEvent) => {
+            const mousePos = { x: e.clientX, y: e.clientY + window.scrollY };
+            // Calculate speed and direction
+            const speed = Math.sqrt(Math.pow(mousePos.x - lastMousePos.current.x, 2));
+
+            let ctx = gsap.context(() => {
+                // Animate the image holder
+                if (currentItem !== null) {
+                    const maxY = window.scrollY + window.innerHeight - 350;
+                    const maxX = window.innerWidth - 250;
+
+                    gsap.to(revealRef.current, {
+                        x: gsap.utils.clamp(0, maxX, mousePos.x - 110),
+                        y: gsap.utils.clamp(0, maxY, mousePos.y - 160),
+                        rotation: speed * (mousePos.x > lastMousePos.current.x ? 1 : -1), // Apply rotation based on speed and direction
+                        ease: "back.out(2)",
+                        duration: 1.3,
+                    });
+                    gsap.to(revealRef.current, {
+                        opacity: hovering ? 1 : 0,
+                        visibility: "visible",
+                        ease: "power3.out",
+                        duration: 0.4,
+                    });
+                }
+                lastMousePos.current = mousePos;
+                return () => ctx.revert(); // cleanup!
+            }, component);
+        };
+
+        window.addEventListener("mousemove", handleMouseMove);
+
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+        };
+    }, [hovering, currentItem]);
+
     const onMouseEnter = (index: number) => {
         setCurrentItem(index);
         if (!hovering) setHovering(true);
@@ -90,8 +130,6 @@ const ContentList = ({
             img.src = url;
         });
     }, [contentImages]);
-
-
 
     return (
         <div>

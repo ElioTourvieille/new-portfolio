@@ -173,11 +173,11 @@ type PageDocumentDataSlicesSlice =
   | BiographySlice;
 
 /**
- * Content for Page documents
+ * Content for About Page documents
  */
 interface PageDocumentData {
   /**
-   * Slice Zone field in *Page*
+   * Slice Zone field in *About Page*
    *
    * - **Field Type**: Slice Zone
    * - **Placeholder**: *None*
@@ -186,7 +186,7 @@ interface PageDocumentData {
    * - **Documentation**: https://prismic.io/docs/field#slices
    */
   slices: prismic.SliceZone<PageDocumentDataSlicesSlice> /**
-   * Meta Title field in *Page*
+   * Meta Title field in *About Page*
    *
    * - **Field Type**: Text
    * - **Placeholder**: A title of the page used for social media and search engines
@@ -197,7 +197,7 @@ interface PageDocumentData {
   meta_title: prismic.KeyTextField;
 
   /**
-   * Meta Description field in *Page*
+   * Meta Description field in *About Page*
    *
    * - **Field Type**: Text
    * - **Placeholder**: A brief summary of the page
@@ -208,7 +208,7 @@ interface PageDocumentData {
   meta_description: prismic.KeyTextField;
 
   /**
-   * Meta Image field in *Page*
+   * Meta Image field in *About Page*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
@@ -220,7 +220,7 @@ interface PageDocumentData {
 }
 
 /**
- * Page document from Prismic
+ * About Page document from Prismic
  *
  * - **API ID**: `page`
  * - **Repeatable**: `true`
